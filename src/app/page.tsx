@@ -1,95 +1,76 @@
-import Image from 'next/image'
-import styles from './page.module.css'
+import React from 'react';
+import { Avatar, Button, Card, Flex, Layout, Space } from 'antd';
+import { AlignLeftOutlined, DownloadOutlined, FilterOutlined, MessageFilled, StarFilled } from '@ant-design/icons';
+import { Content, Header } from 'antd/es/layout/layout'; // TODO: Extract from 'antd'
+import BarChart from './components/BarChart';
+import DonutChart from './components/DonutChart';
+import styles from './page.module.css';
 
-export default function Home() {
-  return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.tsx</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
+// TODO: move styles to css file
+const headerStyle: React.CSSProperties = {
+  display: 'flex',
+  justifyItems: 'flex-start',
+  textAlign: 'center',
+  color: 'var(--primary-color)',
+  fontWeight: 'bold',
+  height: 64,
+  paddingInline: 48,
+  lineHeight: '64px',
+  backgroundColor: '#dcdcdc',
+};
 
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
+const Home = () => (
+  <Layout className={styles.main}>
+    <Header style={headerStyle}>
+      <div>MSD Test Assignment</div>
+    </Header>
+    <Content style={{ padding: '0 48px' }}>
+      <Flex justify='space-between' align='center'>
+        <div>Statistics</div>
+        <Flex gap='middle' style={{ margin: '16px 0' }}>
+          <Button>
+            <span>Export to PDF</span>
+            <DownloadOutlined style={{ color: 'var(--primary-color)' }} />
+          </Button>
+          <Button>
+            <span>Notes</span>
+            <span style={{ color: 'var(--grey-color)' }}>(3)</span>
+            <AlignLeftOutlined style={{ color: 'var(--primary-color)' }} />
+          </Button>
+          <Button>
+            <span>Filter</span>
+            <FilterOutlined style={{ color: 'var(--primary-color)' }} />
+          </Button>
+        </Flex>
+      </Flex>
+      <Flex gap='middle'>
+        <Card
+          style={{ width: '50%' }}
+          // extra={<StarFilled />}  TODO: add favourite func
+          title='Bar Chart'
+          actions={[
+            <Flex justify='space-between'>
+              <Avatar src='https://xsgames.co/randomusers/avatar.php?g=pixel' />,
+              <MessageFilled />
+            </Flex>,
+          ]}>
+          <BarChart />
+        </Card>
+        <Card
+          style={{ width: '50%' }}
+          title='Donut Chart'
+          actions={[
+            <Flex justify='space-between'>
+              <Avatar src='https://xsgames.co/randomusers/avatar.php?g=pixel' />,
+              <MessageFilled />
+            </Flex>,
+          ]}>
+          <DonutChart />
+        </Card>
+      </Flex>
+      <Space />
+    </Content>
+  </Layout>
+);
 
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore starter templates for Next.js.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
-  )
-}
+export default Home;
