@@ -19,58 +19,72 @@ const headerStyle: React.CSSProperties = {
   backgroundColor: '#dcdcdc',
 };
 
-const Home = () => (
-  <Layout className={styles.main}>
-    <Header style={headerStyle}>
-      <div>MSD Test Assignment</div>
-    </Header>
-    <Content style={{ padding: '0 48px' }}>
-      <Flex justify='space-between' align='center'>
-        <div>Statistics</div>
-        <Flex gap='middle' style={{ margin: '16px 0' }}>
-          <Button>
-            <span>Export to PDF</span>
-            <DownloadOutlined style={{ color: 'var(--primary-color)' }} />
-          </Button>
-          <Button>
-            <span>Notes</span>
-            <span style={{ color: 'var(--grey-color)' }}>(3)</span>
-            <AlignLeftOutlined style={{ color: 'var(--primary-color)' }} />
-          </Button>
-          <Button>
-            <span>Filter</span>
-            <FilterOutlined style={{ color: 'var(--primary-color)' }} />
-          </Button>
-        </Flex>
-      </Flex>
-      <Flex gap='middle'>
-        <Card
-          style={{ width: '50%' }}
-          // extra={<StarFilled />}  TODO: add favourite func
-          title='Bar Chart'
-          actions={[
-            <Flex justify='space-between'>
-              <Avatar src='https://xsgames.co/randomusers/avatar.php?g=pixel' />,
-              <MessageFilled />
-            </Flex>,
-          ]}>
-          <BarChart />
-        </Card>
-        <Card
-          style={{ width: '50%' }}
-          title='Donut Chart'
-          actions={[
-            <Flex justify='space-between'>
-              <Avatar src='https://xsgames.co/randomusers/avatar.php?g=pixel' />,
-              <MessageFilled />
-            </Flex>,
-          ]}>
-          <DonutChart />
-        </Card>
-      </Flex>
-      <Space />
-    </Content>
-  </Layout>
-);
 
-export default Home;
+export default async function Home() {
+
+  async function getChartData() {
+    const res = await fetch('https://api.coronavirus.data.gov.uk/v1/data?filters=areaType=nation;date=2022-01-11&structure={"date":"date","newCases":"newCasesByPublishDate","areaName":"areaName"}')
+
+    if (!res.ok) {
+      throw new Error('Failed to fetch data')
+    }
+
+    return res.json()
+  }
+
+  const chartData = await getChartData()
+
+  return (
+    <Layout className={styles.main}>
+      <Header style={headerStyle}>
+        <div>MSD Test Assignment</div>
+      </Header>
+      <Content style={{ padding: '0 48px' }}>
+        <Flex justify='space-between' align='center'>
+          <div>Statistics</div>
+          <Flex gap='middle' style={{ margin: '16px 0' }}>
+            <Button>
+              <span>Export to PDF</span>
+              <DownloadOutlined style={{ color: 'var(--primary-color)' }} />
+            </Button>
+            <Button>
+              <span>Notes</span>
+              <span style={{ color: 'var(--grey-color)' }}>(3)</span>
+              <AlignLeftOutlined style={{ color: 'var(--primary-color)' }} />
+            </Button>
+            <Button>
+              <span>Filter</span>
+              <FilterOutlined style={{ color: 'var(--primary-color)' }} />
+            </Button>
+          </Flex>
+        </Flex>
+        <Flex gap='middle'>
+          <Card
+            // extra={<StarFilled />}  TODO: add favourite func
+            style={{ width: '50%' }}
+            title='Bar Chart'
+            actions={[
+              <Flex justify='space-between'>
+                <Avatar src='https://xsgames.co/randomusers/avatar.php?g=pixel' />,
+                <MessageFilled />
+              </Flex>,
+            ]}>
+            <BarChart data={chartData.data} />
+          </Card>
+          <Card
+            style={{ width: '50%' }}
+            title='Donut Chart'
+            actions={[
+              <Flex justify='space-between'>
+                <Avatar src='https://xsgames.co/randomusers/avatar.php?g=pixel' />,
+                <MessageFilled />
+              </Flex>,
+            ]}>
+            <DonutChart data={chartData.data} />
+          </Card>
+        </Flex>
+        <Space />
+      </Content>
+    </Layout>
+  )
+};
