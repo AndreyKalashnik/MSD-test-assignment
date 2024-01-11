@@ -3,32 +3,38 @@
 import React, { useEffect } from 'react';
 import { Chart } from '@antv/g2';
 
-const data = [
-  { genre: 'Sports', sold: 275 },
-  { genre: 'Strategy', sold: 115 },
-  { genre: 'Action', sold: 120 },
-  { genre: 'Shooter', sold: 350 },
-  { genre: 'Other', sold: 150 },
-];
+interface ChartDataType {
+  date: string;
+  newCases: number;
+  areaName: string;
+}
 
-const BarChart = () => {
+const BarChart = (data: any) => {
+
+  if (!data || !data.data) return <p>No data has been loaded</p>
+
+  console.log({ data });
+
   useEffect(() => {
+
     const chart = new Chart({
-      width: 600,
-      height: 400,
       container: 'bar-chart-container',
+      autoFit: true,
     });
 
     chart
-      .interval() // Create an Interval tag
-      .data(data) // Bind data
-      .encode('x', 'genre') // Encode x channel
-      .encode('y', 'sold'); // Encode y channel
+      .interval()
+      .data(data)
+      .encode('x', '月份')
+      .encode('y', '月均降雨量')
+      .encode('color', 'name')
+      .transform({ type: 'dodgeX' })
+      .interaction('elementHighlight', { background: true });
 
     // Render visualization
     chart.render()
 
-  }, [data])
+  }, [])
 
   return (
     <div id='bar-chart-container'></div>

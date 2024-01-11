@@ -24,12 +24,8 @@ const DonutChart = (data: any) => {
     return { item: elem.areaName, count: elem.newCases, percent: ((elem.newCases * 100) / totalCases) / 100 }
   })
 
-  console.log({ chartData });
-
   useEffect(() => {
     const chart = new Chart({
-      // width: 600,
-      // height: 400,
       container: 'donut-chart-container',
       autoFit: true,
     });
@@ -44,8 +40,18 @@ const DonutChart = (data: any) => {
       .legend('color', { position: 'bottom', layout: { justifyContent: 'center' } })
       .tooltip((data) => ({
         name: data.item,
-        value: `${data.percent * 100}%`,
+        value: `${data.count} (${(data.percent * 100).toFixed(2)}%)`,
       }));
+
+    chart
+      .text()
+      .style('text', `Total Cases \n ${totalCases}`)
+      .style('x', '50%')
+      .style('y', '50%')
+      .style('dy', 0)
+      .style('fontSize', 34)
+      .style('fill', '#8c8c8c')
+      .style('textAlign', 'center');
 
     // Render visualization
     chart.render()

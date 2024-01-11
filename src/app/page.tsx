@@ -22,8 +22,13 @@ const headerStyle: React.CSSProperties = {
 
 export default async function Home() {
 
+  const dateToFetch = '2022-01-11';
+
   async function getChartData() {
-    const res = await fetch('https://api.coronavirus.data.gov.uk/v1/data?filters=areaType=nation;date=2022-01-11&structure={"date":"date","newCases":"newCasesByPublishDate","areaName":"areaName"}')
+    const jsonStructure = JSON.stringify({ date: "date", newCases: "newCasesByPublishDate", areaName: "areaName", femaleCases: "femaleCases" });
+    const apiUrl = `https://api.coronavirus.data.gov.uk/v1/data?filters=areaType=nation;date=${dateToFetch}&structure=${jsonStructure}`;
+    console.log(apiUrl);
+    const res = await fetch(apiUrl);
 
     if (!res.ok) {
       throw new Error('Failed to fetch data')
@@ -73,7 +78,7 @@ export default async function Home() {
           </Card>
           <Card
             style={{ width: '50%' }}
-            title='Donut Chart'
+            title={`Cases by country - ${dateToFetch}`}
             actions={[
               <Flex justify='space-between'>
                 <Avatar src='https://xsgames.co/randomusers/avatar.php?g=pixel' />,
