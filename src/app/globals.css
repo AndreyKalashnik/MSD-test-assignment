@@ -43,3 +43,41 @@ a {
   padding: 0 0.5em 0 0.5em;
   margin: 0 0 0 0.25em;
 }
+
+.primary-color {
+  color: var(--primary-color) !important;
+}
+
+.grey-color {
+  color: var(--grey-color);
+}
+
+.panelContainer { 
+  margin: 1em 0;
+}
+
+.cardActions {
+  padding: 0 2em;
+}
+
+.cardContainer {
+  width: 50%;
+}
+
+.cardContainer:first-child {
+  margin: 0 2em 0 0;
+}
+
+@media only screen and (max-width: 600px) {
+  .cardContainerWrapper {
+    flex-wrap: wrap;
+  }
+
+  .cardContainer {
+    width: 100%;
+  }
+
+  .cardContainer:first-child {
+    margin: 0 0 1em 0;
+  }
+}

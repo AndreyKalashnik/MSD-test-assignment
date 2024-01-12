@@ -38,47 +38,48 @@ export default async function Home() {
       <Content className='brandedContent'>
         <Flex justify='space-between' align='center'>
           <div>Dashboard</div>
-          <Flex gap='middle' style={{ margin: '1em 0' }}>
+          <Flex gap='middle' className='panelContainer'>
             <Button>
               <span>Export to PDF</span>
-              <DownloadOutlined style={{ color: 'var(--primary-color)' }} />
+              <DownloadOutlined className='primary-color' />
             </Button>
             <Button>
               <span>Notes</span>
-              <span style={{ color: 'var(--grey-color)' }}>(3)</span>
-              <AlignLeftOutlined style={{ color: 'var(--primary-color)' }} />
+              <span className='grey-color'>(3)</span>
+              <AlignLeftOutlined className='primary-color' />
             </Button>
             <Button>
               <span>Filter</span>
               <span className='filterIcon'>9</span>
-              <FilterOutlined style={{ color: 'var(--primary-color)' }} />
+              <FilterOutlined className='primary-color' />
             </Button>
           </Flex>
         </Flex>
-        <Flex gap='middle'>
-          <Card
-            // extra={<StarFilled />}  TODO: add favourite func
-            style={{ width: '50%' }}
-            title={`Vaccination Status - ${dateToFetch}`}
-            actions={[
-              <Flex key='list-avatar-and-message-icons' justify='space-between' style={{ padding: '0 2em' }}>
-                <Avatar src='https://xsgames.co/randomusers/avatar.php?g=pixel' />,
-                <MessageFilled />
-              </Flex>,
-            ]}>
-            <BarChart data={chartData.data} />
-          </Card>
-          <Card
-            style={{ width: '50%' }}
-            title={`Cases by country - ${dateToFetch}`}
-            actions={[
-              <Flex key='list-avatar-and-message-icons' justify='space-between' style={{ padding: '0 2em' }}>
-                <Avatar src='https://xsgames.co/randomusers/avatar.php?g=pixel' />,
-                <MessageFilled />
-              </Flex>,
-            ]}>
-            <DonutChart data={chartData.data} />
-          </Card>
+        <Flex className='cardContainerWrapper'>
+          <div className='cardContainer'>
+            <Card
+              title={`Vaccination Status - ${dateToFetch}`}
+              actions={[
+                <Flex key='list-avatar-and-message-icons' justify='space-between' className='cardActions' >
+                  <Avatar src='https://xsgames.co/randomusers/avatar.php?g=pixel' />,
+                  <MessageFilled />
+                </Flex>,
+              ]}>
+              <BarChart data={chartData.data} />
+            </Card>
+          </div>
+          <div className='cardContainer'>
+            <Card
+              title={`Cases by country - ${dateToFetch}`}
+              actions={[
+                <Flex key='list-avatar-and-message-icons' justify='space-between' className='cardActions' >
+                  <Avatar src='https://xsgames.co/randomusers/avatar.php?g=pixel' />,
+                  <MessageFilled />
+                </Flex>,
+              ]}>
+              <DonutChart data={chartData.data} />
+            </Card>
+          </div>
         </Flex>
         <Space />
       </Content>
