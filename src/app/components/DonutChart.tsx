@@ -7,8 +7,9 @@ interface ChartDataType {
   date: string;
   newCases: number;
   areaName: string;
+  newPeopleVaccinatedFirstDoseByPublishDate: number;
+  newPeopleVaccinatedSecondDoseByPublishDate: number;
 }
-
 
 const DonutChart = (data: any) => {
 
@@ -18,11 +19,11 @@ const DonutChart = (data: any) => {
     return accumulator + value;
   }, 0);
 
-  console.log({ totalCases });
-
   const chartData = data.data.map((elem: ChartDataType) => {
     return { item: elem.areaName, count: elem.newCases, percent: ((elem.newCases * 100) / totalCases) / 100 }
-  })
+  });
+
+  if (!data.data) return <p>No data has been loaded</p>
 
   useEffect(() => {
     const chart = new Chart({
@@ -53,16 +54,13 @@ const DonutChart = (data: any) => {
       .style('fill', '#8c8c8c')
       .style('textAlign', 'center');
 
-    // Render visualization
-    chart.render()
+    chart.render();
 
-  }, [])
-
-  if (!data.data) return <p>No data has been loaded</p>
+  }, []);
 
   return (
     <div id='donut-chart-container' />
-  )
+  );
 }
 
 export default DonutChart;

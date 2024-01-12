@@ -3,20 +3,28 @@
 import React, { useEffect } from 'react';
 import { Chart } from '@antv/g2';
 
-interface ChartDataType {
-  date: string;
-  newCases: number;
-  areaName: string;
+interface TransformedDataType {
+  country: string;
+  name: string;
+  amount: number;
 }
 
 const BarChart = (data: any) => {
+  const barChartData: TransformedDataType[] = [];
+
+  data.data.forEach((country: any) => {
+    ['newPeopleVaccinatedFirstDoseByPublishDate', 'newPeopleVaccinatedSecondDoseByPublishDate'].forEach((doseType: string) => {
+      barChartData.push({
+        country: country.areaName,
+        name: doseType,
+        amount: country[doseType]
+      });
+    });
+  });
 
   if (!data || !data.data) return <p>No data has been loaded</p>
 
-  console.log({ data });
-
   useEffect(() => {
-
     const chart = new Chart({
       container: 'bar-chart-container',
       autoFit: true,
@@ -24,21 +32,25 @@ const BarChart = (data: any) => {
 
     chart
       .interval()
-      .data(data)
-      .encode('x', '月份')
-      .encode('y', '月均降雨量')
+      .data(barChartData)
+      .encode('x', 'country')
+      .encode('y', 'amount')
       .encode('color', 'name')
+      .legend('color', { position: 'bottom', layout: { justifyContent: 'center' } })
       .transform({ type: 'dodgeX' })
-      .interaction('elementHighlight', { background: true });
+      .interaction('elementHighlight', { background: true })
+      .tooltip((data) => ({
+        name: data.name.replace(/([a-z])([A-Z])/g, '$1 $2'),
+        value: data.amount,
+      }));
 
-    // Render visualization
-    chart.render()
+    chart.render();
 
-  }, [])
+  }, []);
 
   return (
     <div id='bar-chart-container'></div>
-  )
+  );
 }
 
 export default BarChart;
