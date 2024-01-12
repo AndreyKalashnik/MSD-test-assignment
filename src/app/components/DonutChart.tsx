@@ -23,8 +23,6 @@ const DonutChart = (data: any) => {
     return { item: elem.areaName, count: elem.newCases, percent: ((elem.newCases * 100) / totalCases) / 100 }
   });
 
-  if (!data.data) return <p>No data has been loaded</p>
-
   useEffect(() => {
     const chart = new Chart({
       container: 'donut-chart-container',
@@ -57,6 +55,8 @@ const DonutChart = (data: any) => {
     chart.render();
 
   }, []);
+
+  if (!data.data) return <p>No data has been loaded</p>
 
   return (
     <div id='donut-chart-container' />

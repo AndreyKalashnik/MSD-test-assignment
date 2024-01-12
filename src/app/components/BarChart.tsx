@@ -22,8 +22,6 @@ const BarChart = (data: any) => {
     });
   });
 
-  if (!data || !data.data) return <p>No data has been loaded</p>
-
   useEffect(() => {
     const chart = new Chart({
       container: 'bar-chart-container',
@@ -47,6 +45,8 @@ const BarChart = (data: any) => {
     chart.render();
 
   }, []);
+
+  if (!data || !data.data) return <p>No data has been loaded</p>
 
   return (
     <div id='bar-chart-container'></div>
