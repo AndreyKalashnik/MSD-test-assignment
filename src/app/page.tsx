@@ -61,7 +61,7 @@ export default async function Home() {
             style={{ width: '50%' }}
             title={`Vaccination Status - ${dateToFetch}`}
             actions={[
-              <Flex key='list-avatar-and-message-icons' justify='space-between' className='sectionFooter'>
+              <Flex key='list-avatar-and-message-icons' justify='space-between' style={{ padding: '0 2em' }}>
                 <Avatar src='https://xsgames.co/randomusers/avatar.php?g=pixel' />,
                 <MessageFilled />
               </Flex>,
